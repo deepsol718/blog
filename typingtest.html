@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Typing Test</title>
+    <style>
+      /* CSS styles for the page */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      #test-text {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+      #input-box {
+        font-size: 1.2em;
+        width: 80%;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Typing Test</h1>
+    <p>Type the following text as quickly and accurately as you can and press enter to finish:</p>
+    <div id="test-text">Hi everyone, this is the typing test website currently under development and I got the idea about this website from my friend prabal who is preparing for SSC exam. He bought a website access for a week so I am thinking of making a website like this which can help lot of students.</div>
+    <label for="input-box">Type here:</label>
+    <input type="text" id="input-box" autofocus>
+    <p id="result"></p>
+    <script>
+      // JavaScript for the page
+      var testText = document.getElementById("test-text").innerHTML;
+      var inputBox = document.getElementById("input-box");
+      var result = document.getElementById("result");
+      var startTime, endTime;
+
+      function startTest() {
+        inputBox.value = "";
+        inputBox.disabled = false;
+        inputBox.focus();
+        result.innerHTML = "";
+        startTime = Date.now();
+      }
+
+      function endTest() {
+        inputBox.disabled = true;
+        endTime = Date.now();
+        var elapsedTime = (endTime - startTime) / 1000;
+        var words = testText.trim().split(" ");
+        var input = inputBox.value.trim().split(" ");
+        var correctCount = 0;
+        for (var i = 0; i < input.length; i++) {
+          if (input[i] === words[i]) {
+            correctCount++;
+          }
+        }
+        var accuracy = correctCount / input.length * 100;
+        var wpm = (input.length / elapsedTime) * 60;
+        result.innerHTML = "Your accuracy is " + accuracy.toFixed(2) + "%. Your speed is " + wpm.toFixed(2) + " words per minute.";
+      }
+
+      inputBox.addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+          endTest();
+        }
+      });
+
+      startTest();
+    </script>
+  </body>
+</html>
